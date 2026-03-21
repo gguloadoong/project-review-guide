@@ -1,0 +1,15 @@
+# 프로젝트 구조에 맞게 경로를 수정하세요
+
+frontend:
+  - changed-files:
+      - any-glob-to-any-file: 'src/**'
+
+backend:
+  - changed-files:
+      - any-glob-to-any-file: 'api/**'
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.md'
+          - '.github/**'
