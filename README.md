@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
-4명의 AI 봇 리뷰어와 Claude Code의 기획 리뷰를 결합하여,
+3명의 AI 봇 리뷰어와 Claude Code의 기획 리뷰를 결합하여,
 **코드 품질**과 **서비스 방향성**을 동시에 검증하는 리뷰 가이드입니다.
 
 </div>
@@ -33,9 +33,8 @@
 ```
 PR 생성
   │
-  ├─ [코드 리뷰] 봇 4명 자동 실행
+  ├─ [코드 리뷰] 봇 3명 자동 실행
   │   ├─ Gemini Code Assist — Google AI 리뷰
-  │   ├─ Qodo PR Agent — 보안/품질/개선 제안
   │   ├─ CodeRabbit — 변경 요약 + 코드 리뷰
   │   └─ GitHub Copilot — Copilot 리뷰
   │
@@ -45,8 +44,8 @@ PR 생성
   │   ├─ 서비스 방향성 — 타겟 유저/핵심 가치와 부합하는지
   │   └─ PRD 업데이트 필요 여부 판단
   │
-  ├─ [토론] CodeRabbit + Qodo (최대 1회전)
-  │   ├─ @coderabbitai 멘션 + /ask 동시 질문
+  ├─ [토론] CodeRabbit (최대 1회전)
+  │   ├─ @coderabbitai 멘션으로 질문
   │   ├─ 봇 응답 확인 → 최종 판단
   │   └─ 추가 질문 없이 머지
   │
@@ -61,20 +60,12 @@ PR 생성
 
 ```bash
 # 새 프로젝트 루트에서
-cp templates/.pr_agent.toml .pr_agent.toml
 cp templates/.coderabbit.yaml .coderabbit.yaml
-cp templates/.github/workflows/pr_agent.yml .github/workflows/pr_agent.yml
 cp templates/.github/workflows/label-pr.yml .github/workflows/label-pr.yml
 cp templates/.github/labeler.yml .github/labeler.yml
 ```
 
-### 2. GitHub 시크릿 등록
-
-```bash
-gh secret set GEMINI_API_KEY --repo owner/repo
-```
-
-### 3. CLAUDE.md에 리뷰 규칙 추가
+### 2. CLAUDE.md에 리뷰 규칙 추가
 
 `guides/claude-md-template.md`의 Issue/PR/리뷰 섹션을 프로젝트 CLAUDE.md에 복사합니다.
 
@@ -84,7 +75,7 @@ gh secret set GEMINI_API_KEY --repo owner/repo
 
 | 문서 | 설명 |
 |------|------|
-| [코드 리뷰 가이드](guides/code-review.md) | 봇 4명 설정 + 코드 레벨 리뷰 규칙 |
+| [코드 리뷰 가이드](guides/code-review.md) | 봇 3명 설정 + 코드 레벨 리뷰 규칙 |
 | [기획 리뷰 가이드](guides/product-review.md) | PRD 대조 + 서비스 방향성 검토 |
 | [리뷰 토론 절차](guides/review-discussion.md) | 1회전 토론 규칙 + 무한 루프 방지 |
 | [PRD 동기화 가이드](guides/prd-sync.md) | PRD 드리프트 방지 규칙 |
@@ -94,9 +85,7 @@ gh secret set GEMINI_API_KEY --repo owner/repo
 
 | 파일 | 설명 |
 |------|------|
-| [.pr_agent.toml](templates/.pr_agent.toml) | Qodo PR Agent 설정 |
 | [.coderabbit.yaml](templates/.coderabbit.yaml) | CodeRabbit 한국어 설정 |
-| [pr_agent.yml](templates/.github/workflows/pr_agent.yml) | Qodo 워크플로우 |
 | [label-pr.yml](templates/.github/workflows/label-pr.yml) | Copilot + 자동 라벨링 |
 | [labeler.yml](templates/.github/labeler.yml) | 경로 기반 라벨 규칙 |
 
@@ -107,7 +96,6 @@ gh secret set GEMINI_API_KEY --repo owner/repo
 | 봇 | 잘하는 것 | 못하는 것 | 토론 가능 |
 |----|----------|----------|:---------:|
 | Gemini Code Assist | 전체 코드 품질 리뷰 | 서비스 맥락 이해 | ❌ |
-| Qodo PR Agent | 보안/버그/개선 제안 | 기획 적합성 판단 | ✅ `/ask` |
 | CodeRabbit | 변경 요약 + 리뷰 | 비즈니스 로직 검증 | ✅ `@coderabbitai` |
 | Copilot | 인라인 코드 제안 | 아키텍처 판단 | ❌ |
 | **Claude Code** | **기획 리뷰 + 리뷰 종합** | 실시간 자동 트리거 | **중재자** |
@@ -121,8 +109,9 @@ gh secret set GEMINI_API_KEY --repo owner/repo
 | Gemini Code Assist | 무료 (GitHub App) |
 | CodeRabbit | 무료 (GitHub App) |
 | Copilot | GitHub 구독에 포함 |
-| Qodo PR Agent | 무료 (Gemini 2.5 Flash 무료 티어) |
 | Claude Code | Claude Max 구독 |
+
+**추가 API 키 불필요. 모든 봇이 무료로 작동합니다.**
 
 ---
 
